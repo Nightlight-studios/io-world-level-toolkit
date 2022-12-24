@@ -134,6 +134,7 @@ GameObject:
   - component: {fileID: 28507091}
   - component: {fileID: 28507092}
   - component: {fileID: 28507093}
+  - component: {fileID: 28507094}
   m_Layer: 0
   m_Name: SceneDirector
   m_TagString: Untagged
@@ -213,6 +214,19 @@ MonoBehaviour:
   m_DefaultActionMap: Player
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
+--- !u!114 &28507094
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 28507090}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 18f90f2c5c086ad43bae211cc2eabc9f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  button: {fileID: 0}
 --- !u!1 &374774612
 GameObject:
   m_ObjectHideFlags: 0
@@ -342,6 +356,7 @@ GameObject:
   - component: {fileID: 847151196}
   - component: {fileID: 847151198}
   - component: {fileID: 847151199}
+  - component: {fileID: 847151200}
   m_Layer: 0
   m_Name: Button
   m_TagString: Untagged
@@ -408,8 +423,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 847151195}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 3.07, y: -4.3, z: 0}
-  m_LocalScale: {x: 2.23, y: 1, z: 1}
+  m_LocalPosition: {x: 3.07, y: -3.4, z: 0}
+  m_LocalScale: {x: 2.23, y: 0.58, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 3
@@ -461,6 +476,19 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
+--- !u!114 &847151200
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 847151195}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c26ce248dff62084296f72dde772a7b8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  started: 0
 --- !u!1 &1136667417
 GameObject:
   m_ObjectHideFlags: 0
@@ -687,7 +715,7 @@ GameObject:
   - component: {fileID: 2045528437}
   - component: {fileID: 2045528440}
   m_Layer: 0
-  m_Name: Ander
+  m_Name: Player
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

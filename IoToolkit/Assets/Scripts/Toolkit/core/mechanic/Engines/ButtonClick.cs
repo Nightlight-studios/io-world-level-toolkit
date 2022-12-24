@@ -7,6 +7,7 @@ public class ButtonClick : MonoBehaviour
 
     private readonly bool DEFAULT_STARTED = false;
     public bool started; 
+    public IButtonClickHandler handler;
 
 
     // Start is called before the first frame update
@@ -16,8 +17,26 @@ public class ButtonClick : MonoBehaviour
     }
 
 
-    public void activate() {
+    void OnCollisionEnter2D(Collision2D coll){
+
+        bool mayActivate = false;
+
+        if(coll.gameObject.name == "Player"){
+            mayActivate = true;
+        }
+
+        if(mayActivate && !this.started){
+            this.Activate();
+        }
+    }
+
+
+
+    void Activate() {
         
+        this.handler.Activate();
+        this.started = true;
+
     }
 
     // Update is called once per frame
