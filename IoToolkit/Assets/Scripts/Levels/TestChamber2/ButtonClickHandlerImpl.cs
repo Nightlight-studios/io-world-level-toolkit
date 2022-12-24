@@ -5,12 +5,17 @@ using UnityEngine;
 public class ButtonClickHandlerImpl : IButtonClickHandler
 {
 
-    public ButtonClickHandlerImpl() {
-        Debug.Log("Creating button handler");
+    private ButtonData data;
+
+    public ButtonClickHandlerImpl(ButtonData data) {
+        this.data = data;
     }
 
 
     public void Activate() {
+
+        data.SpriteRenderer.color = Color.red;
+        data.Transform.localScale = new Vector3(2.23f, 0.3f, 0);
         Debug.Log("button activated from handler :D");
         
     }

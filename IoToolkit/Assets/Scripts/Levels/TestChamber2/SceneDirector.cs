@@ -10,9 +10,9 @@ public class SceneDirector : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-
         button = GameObject.Find("Button");
-        button.GetComponent<ButtonClick>().handler = new ButtonClickHandlerImpl();
+        ButtonClick buttonBehaviour = button.GetComponent<ButtonClick>();
+        buttonBehaviour.handler = new ButtonClickHandlerImpl(new ButtonDataImpl(buttonBehaviour));
     }
 
     // Update is called once per frame
