@@ -10,6 +10,7 @@ public abstract class ButtonData
     public BoxCollider2D BoxCollider2D;
 
     public ButtonData(ButtonClick parent) {
+        
         this.Transform = parent.GetComponent<Transform>();
         this.SpriteRenderer = parent.GetComponent<SpriteRenderer>();
         this.Rigidbody2D = parent.GetComponent<Rigidbody2D>();

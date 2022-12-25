@@ -13,7 +13,24 @@ public class ButtonClick : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        this.started = DEFAULT_STARTED;   
+        if(this.started == null) {
+            this.started = DEFAULT_STARTED;
+        }
+
+        if(gameObject.GetComponent<SpriteRenderer>() == null) {
+            gameObject.AddComponent<SpriteRenderer>();
+        }
+
+        if(gameObject.GetComponent<BoxCollider2D>() == null) {
+            gameObject.AddComponent<BoxCollider2D>();
+        }
+
+        if(gameObject.GetComponent<Rigidbody2D>() == null) {
+           gameObject.AddComponent<Rigidbody2D>();
+           gameObject.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Static;
+           gameObject.GetComponent<Rigidbody2D>().simulated = true;
+        }
+
     }
 
 
