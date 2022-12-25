@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public class Jumper : MonoBehaviour
 {
@@ -32,7 +33,7 @@ public class Jumper : MonoBehaviour
     }
 
     void UpdateRotation(){
-        this.rotation = gameObject.transform.localRotation.eulerAngles.z;
+        this.rotation = Geometrics.GetLocalRotation(gameObject);
     }
 
     void OnCollisionEnter2D(Collision2D other) 
@@ -48,32 +49,18 @@ public class Jumper : MonoBehaviour
     {
        
         Rigidbody2D rb = other.gameObject.GetComponent<Rigidbody2D>();
-        float y = 0;
-        float x = 0;
 
-        // X Axis check
-        if(Geometrics.IsUp(this.rotation)) {
-            y = Geometrics.CalculateYAxis(this.rotation);
-        } else if(Geometrics.IsDown(this.rotation)) {
-            y = Geometrics.CalculateYAxis(this.rotation);
-        }
+        // Check axis and set velocity
+        Vector2 axis = Geometrics.CalculateAxis(rotation);
 
         Debug.Log("ROTATION: " + rotation);
-        Debug.Log("Y: " + y);
-        Debug.Log("X: " + x);
-
-        // Y Axis check
-        if(Geometrics.IsRight(this.rotation)) {
-            x = Geometrics.CalculateXAxis(this.rotation);
-        } else if(Geometrics.IsLeft(this.rotation)) {
-            x = Geometrics.CalculateXAxis(this.rotation);
-        }
+        Debug.Log("AXIS: " + axis);
 
         // Set item velocity
-        Vector2 velocity = new Vector2(x,y) * jumpForce;
+        Vector2 velocity = axis * jumpForce;
         rb.velocity = velocity;
 
-        // Debug.Log(velocity);
+        Debug.Log(velocity);
 
     }
 

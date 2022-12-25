@@ -18,7 +18,6 @@ public class SceneControls : MonoBehaviour
     }
 
     public void ResetLevel(){
-        Debug.Log("Reseting!");
         Scene scene = SceneManager.GetActiveScene(); 
         SceneManager.LoadScene(scene.name);
     }
