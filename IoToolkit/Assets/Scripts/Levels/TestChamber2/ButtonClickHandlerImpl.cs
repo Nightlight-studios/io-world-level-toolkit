@@ -15,7 +15,7 @@ public class ButtonClickHandlerImpl : IButtonClickHandler
     public void Activate() {
 
         data.SpriteRenderer.color = Color.red;
-        data.Transform.localScale = new Vector3(2.23f, 0.3f, 0);
+        data.Transform.localScale = new Vector3(data.Transform.localScale.x, 0.3f, 0);
         Debug.Log("button activated from handler :D");
         
     }
