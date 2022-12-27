@@ -23,9 +23,8 @@ public class CharacterController : MonoBehaviour
     private bool isGrounded = false;
     private bool doubleJump = false;
     private float lastJump = 0f;
-    private float momentumBufferTime = 0.2f;
-
-    private Vector2 momentum = Vector3.zero;
+    public float momentum = 0f;
+    public bool hasMomentum = false;
     
 
     // Start is called before the first frame update
@@ -40,19 +39,24 @@ public class CharacterController : MonoBehaviour
         checkInput();
         checkGrounded();
 
-        // Gather momentum
-        if(Input.JumpUp && !isGrounded) {
-            momentum = rigidbody.velocity;
-        }
-
         if(isGrounded) {
             lastGrounded = Time.time;
             doubleJump = true;
-            momentum = Vector2.zero;
+            hasMomentum = false;
+            momentum = 0;
+        }
+
+        if(hasJump()){
+            hasMomentum = true;
+            momentum = rigidbody.velocity.x * .5;
         }
 
         move();
         
+    }
+
+    bool hasJump(){
+
     }
 
     void checkInput(){
@@ -65,6 +69,11 @@ public class CharacterController : MonoBehaviour
 
         if (Input.JumpDown) {
            lastJumpPressed = Time.time;
+        }
+
+        // Short jump
+        if (Input.JumpUp && Time.time - lastJumpPressed < jumpTime) {
+            rigidbody.velocity = new Vector2(rigidbody.velocity.x, rigidbody.velocity.y * .5f);
         }
 
     } 
@@ -83,10 +92,6 @@ public class CharacterController : MonoBehaviour
         return isGrounded && Input.JumpDown && Time.time - lastJumpPressed < jumpTime;
     }
 
-    bool IsMomentumActive(){
-        return momentum != Vector2.zero && Time.time - lastGrounded < momentumBufferTime;
-    }
-
     void move(){
 
         // Calculate the movement
@@ -96,12 +101,7 @@ public class CharacterController : MonoBehaviour
             xMovement = Input.X * speed;
         } else {
             xMovement = 0;
-        }
-
-        // if momentum is active, add it to the movement
-        if(IsMomentumActive()){
-            xMovement = momentum.x * .75f;
-        }       
+        }    
 
         // move the player
         rigidbody.velocity = new Vector2(xMovement, rigidbody.velocity.y);
@@ -109,6 +109,11 @@ public class CharacterController : MonoBehaviour
         // jump the player    
         if (CanJump()) {
             rigidbody.velocity = new Vector2(rigidbody.velocity.x, jumpForce);
+        }
+
+        // if the player has momentum, add it to the velocity
+        if(hasMomentum) {
+            rigidbody.velocity = new Vector2(rigidbody.velocity.x + momentum, rigidbody.velocity.y);
         }
 
     }
