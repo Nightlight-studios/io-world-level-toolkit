@@ -44,6 +44,15 @@ public class CharacterController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        //do not rotate
+        rigidbody.freezeRotation = true;
+
+        // if holding something do not show interact icon
+        if(holder.childCount > 0){
+            interactIcon.SetActive(false);
+        }
+
+
         checkInput();
         checkGrounded();
 
@@ -150,26 +159,20 @@ public class CharacterController : MonoBehaviour
             if(hits.Length > 0) {
                 foreach (RaycastHit2D hit in hits) {
                     if (hit.IsInteractable()) {
+
                         hit.Interact();
                         return;
                     }
                 }
             }
-
-
         }
-
     
                
         public void Interact(InputAction.CallbackContext context) {
                
             if(context.performed) {
                 CheckInteraction();
-                Debug.Log("Interact time!");
-            } else if(context.canceled) {
-                Debug.Log("No interact time :(");
-            }
-
+            } 
         }
         #endregion
 

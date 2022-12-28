@@ -12,7 +12,7 @@ public class Grabbable : Interactable
         if(executor == null) {
             return;
         }
-        
+
         this.holder = executor.GetComponent<CharacterController>().holder;
     }
 
@@ -31,8 +31,6 @@ public class Grabbable : Interactable
         } else {
             Grab();
         }
-
-        isGrabbed = !isGrabbed;
     }
 
     private void Grab() {
@@ -44,8 +42,6 @@ public class Grabbable : Interactable
         // Get holder from executor
         holder = executor.GetComponent<CharacterController>().holder;
 
-
-        Debug.Log("Grab");
         isGrabbed = true;
         transform.SetParent(holder);
         transform.localPosition = Vector3.zero;
@@ -54,9 +50,28 @@ public class Grabbable : Interactable
     }
 
     private void Release() {
+
+        Debug.Log("Release");
         isGrabbed = false;
+        holder.DetachChildren();
         this.GetComponent<Rigidbody2D>().isKinematic = false;
-        transform.SetParent(null);
+
+        // Let go of the object and throw it
+
+        //if character rigidbody is moving, add velocity to the object
+
+        float xForce = 0f;
+        float yForce = 0f;
+
+        if(executor.GetComponent<Rigidbody2D>().velocity.x != 0) {
+            xForce = executor.GetComponent<Rigidbody2D>().velocity.x;
+        }
+
+        if(executor.GetComponent<Rigidbody2D>().velocity.y != 0) {
+            yForce = executor.GetComponent<Rigidbody2D>().velocity.y;
+        }
+
+        this.GetComponent<Rigidbody2D>().AddForce(new Vector2(xForce, yForce + 3f), ForceMode2D.Impulse);
     }
 
 }
