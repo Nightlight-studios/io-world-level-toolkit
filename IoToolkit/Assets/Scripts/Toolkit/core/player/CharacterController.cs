@@ -16,13 +16,19 @@ public class CharacterController : MonoBehaviour
     public float jumpForce = 5f;
     public float jumpTime = 0.2f;
 
-    private FrameInput Input;
     private Rigidbody2D rigidbody;
+
+    private FrameInput Input;
+    
     private float lastJumpPressed = 0f;
+    private float lastJump = 0f;
+
     private float lastGrounded = 0f;
     private bool isGrounded = false;
+    
     private bool doubleJump = false;
-    private float lastJump = 0f;
+    
+    
     public float momentum = 0f;
     public bool hasMomentum = false;
     
@@ -31,6 +37,8 @@ public class CharacterController : MonoBehaviour
     void Start()
     {
         rigidbody = GetComponent<Rigidbody2D>();
+        interactIcon.SetActive(false);
+        holder = transform.Find("Holder");
     }
 
     // Update is called once per frame
@@ -43,20 +51,23 @@ public class CharacterController : MonoBehaviour
             lastGrounded = Time.time;
             doubleJump = true;
             hasMomentum = false;
-            momentum = 0;
+            momentum = 0f;
         }
 
+        // TODO Fix momentum 
+        /*
         if(hasJump()){
             hasMomentum = true;
-            momentum = rigidbody.velocity.x * .5;
+            momentum = rigidbody.velocity.x * .5f;
         }
+        */
 
         move();
         
     }
 
     bool hasJump(){
-
+        return false;
     }
 
     void checkInput(){
@@ -118,6 +129,49 @@ public class CharacterController : MonoBehaviour
 
     }
 
+
+        #region Interaction
+        [Header("INTERACTION")] [SerializeField]
+        private GameObject interactIcon;
+        public Transform holder;
+        private Vector2 boxSize = new Vector2(1.938797f, 3.20f);
+
+        public void OpenInteactableIcon(){
+            interactIcon.SetActive(true);
+        }
+
+        public void CloseInteactableIcon(){
+            interactIcon.SetActive(false);
+        }
+
+        private void CheckInteraction(){
+
+            RaycastHit2D[] hits = Physics2D.BoxCastAll(transform.position, new Vector2(10f, 10f), 0, Vector2.zero);
+            if(hits.Length > 0) {
+                foreach (RaycastHit2D hit in hits) {
+                    if (hit.IsInteractable()) {
+                        hit.Interact();
+                        return;
+                    }
+                }
+            }
+
+
+        }
+
+    
+               
+        public void Interact(InputAction.CallbackContext context) {
+               
+            if(context.performed) {
+                CheckInteraction();
+                Debug.Log("Interact time!");
+            } else if(context.canceled) {
+                Debug.Log("No interact time :(");
+            }
+
+        }
+        #endregion
 
 
 
